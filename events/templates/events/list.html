@@ -1,0 +1,58 @@
+{% extends "events/base.html" %}
+{% block content %}
+    <h2>Upcoming Events</h2>
+    {% for event in event_list %}
+      <button class="list-group-item list-group-item-action btn btn-primary" data-toggle="modal" data-target="#eventModal{{ forloop.counter }}">
+        <div class="d-flex w-100 justify-content-between">
+          <div class="mb-1">{{event.name}}</div>
+          <small>Date: {{event.dateTime}}</small>
+        </div>
+        <p class="mb-1">Location: {{event.location}}</p>
+      </button>
+      <div class="modal fade" id="eventModal{{ forloop.counter }}" tabindex="-1" aria-labelledby="eventModalLabel{{ forloop.counter }}" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="eventModalLabel{{ forloop.counter }}">{{event.name}}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+                <span aria-hidden="true">&times;</span>
+              </div>
+              <div class="modal-body">
+                <p><strong>Date: </strong> {{event.dateTime}} </p>
+                <p><strong>Location: </strong>{{event.location}}</p>
+                <p><strong>Class: </strong>{{event.classRel}}</p>
+                <p><strong>Description: </strong>{{event.description}}</p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="joinEvent('{{ event.id }}')">Add to calendar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+    {% empty %}
+    <div >No events scheduled</div> 
+    {% endfor %} 
+    <script>
+      function joinEvent(eventId) {
+        fetch("{% url 'joinEvent' %}", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "X-CSRFToken": "{{ csrf_token }}"
+          },
+          body: JSON.stringify({ event_id: eventId })
+        })
+        .then(response => response.json())
+        .then(data => {
+          if (data.status === "success") {
+            alert(data.message);
+          } else {
+            alert(data.message);
+          }
+        })
+        .catch(error => console.error("Error:", error));
+      }
+    </script>
+    
+{% endblock content %}

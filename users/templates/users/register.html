@@ -1,0 +1,48 @@
+{% extends "events/base.html" %}
+{% block content %}
+    <div class="container d-flex justify-content-center align-items-center vh-95">
+        <div class="card shadow mt-5" style="width: 400px;">
+            <div class="card-body">
+                <h3 class="card-title text-center mb-4">Register</h3>
+                <form method="POST" action="{% url 'register' %}">
+                    {% csrf_token %}
+                    <!-- Username Field -->
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="username" class="form-control" name="username" id="username" placeholder="Enter your username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" class="form-control" name="email" id="email" placeholder="Enter your email" required>
+                    </div>
+                    <!-- First Name Field -->
+                    <div class="form-group">
+                        <label for="fname">First Name</label>
+                        <input type="text" class="form-control" name="fname" id="fname" placeholder="Enter your first name" required>
+                    </div>
+                    <!-- Last Name Field -->
+                    <div class="form-group">
+                        <label for="lname">Last Name</label>
+                        <input type="text" class="form-control" name="lname" id="lname" placeholder="Enter your last name" required>
+                    </div>
+                    <!-- Password Field -->
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" class="form-control" name="password" id="password" placeholder="Enter your password" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password2">Confirm Password</label>
+                        <input type="password" class="form-control" name="password2" id="password2" placeholder="Enter your password" required>
+                    </div>
+                    <!-- Submit Button -->
+                    <button type="submit" class="btn btn-primary btn-block">Register</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="text-center mt-3">
+        <p>Already have an account? 
+            <a href="{% url 'login' %}" class="text-primary">Login</a>
+        </p>
+    </div>
+{% endblock content %}

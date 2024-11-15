@@ -1,0 +1,27 @@
+{% extends "events/base.html" %}
+{% block content %}
+    <div class="container d-flex justify-content-center align-items-center vh-95">
+        <div class="card shadow mt-5" style="width: 400px;">
+            <div class="card-body">
+                <h3 class="card-title text-center mb-4">Login</h3>
+                <form method="POST" action="{% url 'login' %}">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="username">username</label>
+                        <input type="text" class="form-control" name="username" id="username" placeholder="Enter your username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" class="form-control" name="password" id="password" placeholder="Enter your password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Login</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="text-center mt-3">
+        <p>New to the website? 
+            <a href="{% url 'register' %}" class="text-primary">Register</a>
+        </p>
+    </div>
+{% endblock content %}
